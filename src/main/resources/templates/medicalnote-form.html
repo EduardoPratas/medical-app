@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Medical Note</title>
+    <style>
+        body { font-family: Arial; margin: 20px; background-color: #f5f5f5; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        h1 { color: #4CAF50; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 3px; }
+        textarea { height: 150px; resize: vertical; font-family: Arial; }
+        .btn-submit { background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 3px; cursor: pointer; font-size: 14px; }
+        .btn-submit:hover { background-color: #45a049; }
+        .btn-back { color: #666; text-decoration: none; margin-left: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>New Medical Note</h1>
+        <p>Patient: <strong th:text="${patient.name}"></strong></p>
+
+        <form th:action="@{'/patients/' + ${patient.id} + '/notes'}"
+              th:object="${note}" method="post">
+
+            <div class="form-group">
+                <label>Title:</label>
+                <input type="text" th:field="*{title}" placeholder="e.g. Follow-up visit" required/>
+            </div>
+
+            <div class="form-group">
+                <label>Author (Doctor):</label>
+                <input type="text" th:field="*{author}" placeholder="e.g. Dr. Smith" required/>
+            </div>
+
+            <div class="form-group">
+                <label>Content:</label>
+                <textarea th:field="*{content}" placeholder="Write the medical note here..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Save Note</button>
+            <a th:href="@{'/patients/' + ${patient.id} + '/record'}" class="btn-back">← Back to Record</a>
+        </form>
+    </div>
+</body>
+</html>

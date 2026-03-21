@@ -14,6 +14,9 @@
         th { background-color: #f2f2f2; }
         .btn-back { background-color: #666; color: white; padding: 10px; text-decoration: none; border-radius: 3px; }
         .btn-add { background-color: #4CAF50; color: white; padding: 6px 12px; text-decoration: none; border-radius: 3px; font-size: 14px; }
+        .note-card { border: 1px solid #ddd; border-radius: 4px; padding: 15px; margin-bottom: 15px; }
+        .note-card h3 { margin-top: 0; color: #333; }
+        .note-meta { color: #888; font-size: 13px; margin-bottom: 8px; }
     </style>
 </head>
 <body>
@@ -58,16 +61,20 @@
         <div class="section">
             <div class="section-header">
                 <h2>📝 Medical Notes</h2>
+                <a th:href="@{'/patients/' + ${record.patient.id} + '/notes/new'}" class="btn-add">+ Add Note</a>
             </div>
             <div th:if="${record.medicalNotes.empty}">
                 <p>No medical notes recorded.</p>
             </div>
-            <div th:each="note : ${record.medicalNotes}" th:unless="${record.medicalNotes.empty}">
-                <h3 th:text="${note.title}">Note Title</h3>
-                <p><strong>By:</strong> <span th:text="${note.author}"></span> | 
-                   <strong>Date:</strong> <span th:text="${note.createdAt}"></span></p>
-                <p th:text="${note.content}">Note content here...</p>
-                <hr/>
+            <div th:unless="${record.medicalNotes.empty}">
+                <div class="note-card" th:each="note : ${record.medicalNotes}">
+                    <h3 th:text="${note.title}">Note Title</h3>
+                    <div class="note-meta">
+                        <strong>By:</strong> <span th:text="${note.author}"></span> &nbsp;|&nbsp;
+                        <strong>Date:</strong> <span th:text="${note.createdAt}"></span>
+                    </div>
+                    <p th:text="${note.content}">Note content here...</p>
+                </div>
             </div>
         </div>
         
