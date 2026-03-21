@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Appointment</title>
+    <style>
+        body { font-family: Arial; margin: 20px; background-color: #f5f5f5; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        h1 { color: #4CAF50; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 3px; }
+        .btn-submit { background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 3px; cursor: pointer; font-size: 14px; }
+        .btn-submit:hover { background-color: #45a049; }
+        .btn-back { color: #666; text-decoration: none; margin-left: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>New Appointment</h1>
+        <p>Patient: <strong th:text="${patient.name}"></strong></p>
+
+        <form th:action="@{'/patients/' + ${patient.id} + '/appointments'}"
+              th:object="${appointment}" method="post">
+
+            <div class="form-group">
+                <label>Date &amp; Time:</label>
+                <input type="datetime-local" th:field="*{appointmentDate}" required/>
+            </div>
+
+            <div class="form-group">
+                <label>Doctor:</label>
+                <input type="text" th:field="*{doctorName}" placeholder="e.g. Dr. Smith" required/>
+            </div>
+
+            <div class="form-group">
+                <label>Reason:</label>
+                <input type="text" th:field="*{reason}" placeholder="e.g. Annual checkup" required/>
+            </div>
+
+            <div class="form-group">
+                <label>Status:</label>
+                <select th:field="*{status}">
+                    <option value="SCHEDULED">Scheduled</option>
+                    <option value="COMPLETED">Completed</option>
+                    <option value="CANCELLED">Cancelled</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-submit">Save Appointment</button>
+            <a th:href="@{'/patients/' + ${patient.id} + '/record'}" class="btn-back">← Back to Record</a>
+        </form>
+    </div>
+</body>
+</html>

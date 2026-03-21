@@ -38,6 +38,12 @@
                        class="btn btn-delete" 
                        onclick="return confirm('Are you sure?')">Delete</a>
                 </td>
+                    <td>
+                    <a th:href="@{'/patients/' + ${patient.id} + '/record'}">View Record</a>
+                    | 
+                    <a th:href="@{'/patients/delete/' + ${patient.id}}" 
+                    onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
             </tr>
         </tbody>
     </table>

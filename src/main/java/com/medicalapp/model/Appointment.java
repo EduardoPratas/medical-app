@@ -24,6 +24,8 @@ public class Appointment {
     
     private LocalDateTime appointmentDate;
     
+    private String doctorName;
+    
     private String status; // SCHEDULED, COMPLETED, CANCELLED
     
     private String reason;
@@ -40,6 +42,9 @@ public class Appointment {
     
     public LocalDateTime getAppointmentDate() { return appointmentDate; }
     public void setAppointmentDate(LocalDateTime appointmentDate) { this.appointmentDate = appointmentDate; }
+    
+    public String getDoctorName() { return doctorName; }
+    public void setDoctorName(String doctorName) { this.doctorName = doctorName; }
     
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }

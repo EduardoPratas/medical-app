@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Patient Record: <span th:text="${record.patient.name}"></span></title>
+    <style>
+        body { font-family: Arial; margin: 20px; background-color: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { background-color: #4CAF50; color: white; padding: 20px; border-radius: 5px; }
+        .section { background: white; margin: 20px 0; padding: 20px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .section-header h2 { margin: 0; color: #4CAF50; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .btn-back { background-color: #666; color: white; padding: 10px; text-decoration: none; border-radius: 3px; }
+        .btn-add { background-color: #4CAF50; color: white; padding: 6px 12px; text-decoration: none; border-radius: 3px; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Patient Record: <span th:text="${record.patient.name}"></span></h1>
+            <p>Email: <span th:text="${record.patient.email}"></span> | 
+               Phone: <span th:text="${record.patient.phone}"></span></p>
+            <p><strong>Patient ID:</strong> <span th:text="${record.patient.id}"></span></p>
+        </div>
+        
+        <!-- Appointments Section -->
+        <div class="section">
+            <div class="section-header">
+                <h2>📅 Appointments</h2>
+                <a th:href="@{'/patients/' + ${record.patient.id} + '/appointments/new'}" class="btn-add">+ Add Appointment</a>
+            </div>
+            <div th:if="${record.appointments.empty}">
+                <p>No appointments recorded.</p>
+            </div>
+            <table th:unless="${record.appointments.empty}">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Doctor</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="apt : ${record.appointments}">
+                        <td th:text="${apt.appointmentDate}">2025-01-01</td>
+                        <td th:text="${apt.doctorName}">Dr. Smith</td>
+                        <td th:text="${apt.reason}">Checkup</td>
+                        <td th:text="${apt.status}">SCHEDULED</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Medical Notes Section -->
+        <div class="section">
+            <div class="section-header">
+                <h2>📝 Medical Notes</h2>
+            </div>
+            <div th:if="${record.medicalNotes.empty}">
+                <p>No medical notes recorded.</p>
+            </div>
+            <div th:each="note : ${record.medicalNotes}" th:unless="${record.medicalNotes.empty}">
+                <h3 th:text="${note.title}">Note Title</h3>
+                <p><strong>By:</strong> <span th:text="${note.author}"></span> | 
+                   <strong>Date:</strong> <span th:text="${note.createdAt}"></span></p>
+                <p th:text="${note.content}">Note content here...</p>
+                <hr/>
+            </div>
+        </div>
+        
+        <!-- Test Results Section -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🔬 Test Results</h2>
+            </div>
+            <div th:if="${record.testResults.empty}">
+                <p>No test results recorded.</p>
+            </div>
+            <table th:unless="${record.testResults.empty}">
+                <thead>
+                    <tr>
+                        <th>Test Name</th>
+                        <th>Result</th>
+                        <th>Reference Range</th>
+                        <th>Test Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="test : ${record.testResults}">
+                        <td th:text="${test.testName}">Blood Test</td>
+                        <td th:text="${test.result}">4.5</td>
+                        <td th:text="${test.referenceRange}">3.5-5.0</td>
+                        <td th:text="${test.testDate}">2025-01-01</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <a href="/patients" class="btn-back">← Back to Patient List</a>
+    </div>
+</body>
+</html>
