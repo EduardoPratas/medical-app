@@ -82,6 +82,7 @@
         <div class="section">
             <div class="section-header">
                 <h2>🔬 Test Results</h2>
+                <a th:href="@{'/patients/' + ${record.patient.id} + '/testresults/new'}" class="btn-add">+ Add Test Result</a>
             </div>
             <div th:if="${record.testResults.empty}">
                 <p>No test results recorded.</p>

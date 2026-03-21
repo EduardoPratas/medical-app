@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Test Result</title>
+    <style>
+        body { font-family: Arial; margin: 20px; background-color: #f5f5f5; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        h1 { color: #4CAF50; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 3px; }
+        .btn-submit { background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 3px; cursor: pointer; font-size: 14px; }
+        .btn-submit:hover { background-color: #45a049; }
+        .btn-back { color: #666; text-decoration: none; margin-left: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>New Test Result</h1>
+        <p>Patient: <strong th:text="${patient.name}"></strong></p>
+
+        <form th:action="@{'/patients/' + ${patient.id} + '/testresults'}"
+              th:object="${testResult}" method="post">
+
+            <div class="form-group">
+                <label>Test Name:</label>
+                <input type="text" th:field="*{testName}" placeholder="e.g. Blood Count" required/>
+            </div>
+
+            <div class="form-group">
+                <label>Result:</label>
+                <input type="text" th:field="*{result}" placeholder="e.g. 4.5" required/>
+            </div>
+
+            <div class="form-group">
+                <label>Reference Range:</label>
+                <input type="text" th:field="*{referenceRange}" placeholder="e.g. 3.5-5.0"/>
+            </div>
+
+            <div class="form-group">
+                <label>Test Date:</label>
+                <input type="date" th:field="*{testDate}" required/>
+            </div>
+
+            <button type="submit" class="btn-submit">Save Test Result</button>
+            <a th:href="@{'/patients/' + ${patient.id} + '/record'}" class="btn-back">← Back to Record</a>
+        </form>
+    </div>
+</body>
+</html>

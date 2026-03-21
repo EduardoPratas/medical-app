@@ -1,8 +1,14 @@
-// TestResult.java - for lab results
 package com.medicalapp.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDate;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "test_results")
@@ -21,27 +27,21 @@ public class TestResult {
     private String referenceRange;
     private LocalDate testDate;
     
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Patient getPatient() {
-        return patient;
-    }
+    public Patient getPatient() { return patient; }
+    public void setPatient(Patient patient) { this.patient = patient; }
 
-    public String getTestName() {
-        return testName;
-    }
+    public String getTestName() { return testName; }
+    public void setTestName(String testName) { this.testName = testName; }
 
-    public String getResult() {
-        return result;
-    }
+    public String getResult() { return result; }
+    public void setResult(String result) { this.result = result; }
 
-    public String getReferenceRange() {
-        return referenceRange;
-    }
+    public String getReferenceRange() { return referenceRange; }
+    public void setReferenceRange(String referenceRange) { this.referenceRange = referenceRange; }
 
-    public LocalDate getTestDate() {
-        return testDate;
-    }
+    public LocalDate getTestDate() { return testDate; }
+    public void setTestDate(LocalDate testDate) { this.testDate = testDate; }
 }
