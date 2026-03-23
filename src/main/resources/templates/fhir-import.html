@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>FHIR Import</title>
+    <style>
+        body { font-family: Arial; margin: 20px; background-color: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { background-color: #1565C0; color: white; padding: 20px; border-radius: 5px; margin-bottom: 20px; }
+        .header h1 { margin: 0; }
+        .header p { margin: 5px 0 0 0; opacity: 0.85; font-size: 14px; }
+        .card { background: white; padding: 25px; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .card h2 { margin-top: 0; color: #1565C0; }
+        .info-box { background-color: #e3f2fd; border-left: 4px solid #1565C0; padding: 15px; border-radius: 4px; margin-bottom: 20px; font-size: 14px; }
+        .info-box p { margin: 4px 0; }
+        .btn-import { background-color: #1565C0; color: white; padding: 12px 25px; border: none; border-radius: 3px; cursor: pointer; font-size: 15px; }
+        .btn-import:hover { background-color: #0d47a1; }
+        .btn-back { color: #666; text-decoration: none; font-size: 14px; }
+        .result-box { margin-top: 20px; padding: 15px; border-radius: 4px; background-color: #e8f5e9; border-left: 4px solid #4CAF50; }
+        .result-stats { font-size: 16px; margin-bottom: 10px; }
+        .result-stats span { font-weight: bold; }
+        .message-list { list-style: none; padding: 0; margin: 10px 0 0 0; }
+        .message-list li { padding: 4px 0; font-size: 13px; color: #555; border-bottom: 1px solid #eee; }
+        .message-list li:last-child { border-bottom: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="header">
+            <h1>🔗 FHIR Patient Import</h1>
+            <p>HL7 FHIR R4 — simulating integration with an external health system</p>
+        </div>
+
+        <div class="card">
+            <h2>About This Feature</h2>
+            <div class="info-box">
+                <p>📡 The embedded FHIR server is running at <strong>/fhir</strong> alongside this app.</p>
+                <p>👥 5 sample British patients are pre-loaded into the FHIR server on startup.</p>
+                <p>⏭ Patients already in the local database (matched by email) will be skipped.</p>
+            </div>
+
+            <p>Click the button below to read patients from the FHIR server and import any new ones into the local H2 database.</p>
+
+            <form method="post" th:action="@{/fhir/import}">
+                <button type="submit" class="btn-import">⬇ Run FHIR Import</button>
+            </form>
+
+            <!-- Results shown after import -->
+            <div class="result-box" th:if="${result != null}">
+                <div class="result-stats">
+                    ✅ Imported: <span th:text="${result.imported}">0</span> &nbsp;|&nbsp;
+                    ⏭ Skipped: <span th:text="${result.skipped}">0</span>
+                </div>
+                <ul class="message-list">
+                    <li th:each="msg : ${result.messages}" th:text="${msg}">message</li>
+                </ul>
+            </div>
+        </div>
+
+        <a href="/patients" class="btn-back">← Back to Patient List</a>
+    </div>
+</body>
+</html>

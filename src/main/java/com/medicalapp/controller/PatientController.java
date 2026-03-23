@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -33,6 +34,12 @@ public class PatientController {
     @PostMapping
     public String savePatient(@ModelAttribute Patient patient) {
         patientRepository.save(patient);
+        return "redirect:/patients";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deletePatient(@PathVariable Long id) {
+        patientRepository.deleteById(id);
         return "redirect:/patients";
     }
 }
